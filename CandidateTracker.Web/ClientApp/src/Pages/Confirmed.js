@@ -1,18 +1,17 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import PendingTableRow from "./../components/PendingTableRow";
+import TableRow from "./../components/TableRow";
 
 const Pending = () => {
-  const [pendingCandidates, setPendingCandidates] = useState([]);
-  const [showNotes, setShowNotes] = useState(false);
+  const [confirmedCandidates, setConfirmedCandidates] = useState([]);
 
   useEffect(() => {
-    const getPendingCandidates = async () => {
-      const { data } = await axios.get(`api/candidatetracker/getpending`);
-      setPendingCandidates(data);
+    const getConfirmedCandidates = async () => {
+      const { data } = await axios.get(`api/candidatetracker/getconfirmed`);
+      setConfirmedCandidates(data);
     };
 
-    getPendingCandidates();
+    getConfirmedCandidates();
   }, []);
 
   return (
@@ -21,7 +20,6 @@ const Pending = () => {
         <table className="table table-hover table-striped table-bordered">
           <thead>
             <tr>
-              <th>View Details</th>
               <th>First Name</th>
               <th>Last Name</th>
               <th>Phone</th>
@@ -30,9 +28,9 @@ const Pending = () => {
             </tr>
           </thead>
           <tbody>
-            {!!pendingCandidates.length &&
-              pendingCandidates.map((candidate) => (
-                <PendingTableRow candidate={candidate} key={candidate.id} />
+            {!!confirmedCandidates.length &&
+              confirmedCandidates.map((candidate) => (
+                <TableRow candidate={candidate} key={candidate.id} />
               ))}
           </tbody>
         </table>

@@ -2,7 +2,7 @@ import React from "react";
 
 const Home = () => {
   return (
-    <div className="container" style="margin-top: 20px;">
+    <div className="container" style={{marginTop: 20}}>
       <h1>
         Welcome to the Candidate Tracker. Use the links above to navigate.
       </h1>
@@ -10,4 +10,4 @@ const Home = () => {
   );
 };
 
-export default HTMLModElement;
+export default Home;

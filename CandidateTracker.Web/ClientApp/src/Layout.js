@@ -1,7 +1,10 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import { Link } from 'react-router-dom';
+import {Context} from './components/Context';
+
 
 const Layout = (props) => {
+const {pendingCount, confirmedCount, refusedCount} =useContext(Context);
     return (
         <div>
             <header>
@@ -19,14 +22,33 @@ const Layout = (props) => {
                                         Home
                                     </Link>
                                 </li>
-                              
+                                <li className="nav-item">
+                                    <Link to='/addcandidate' className='nav-link text-light'>
+                                        Add Candidate
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to='/pending' className='nav-link text-light'>
+                                        Pending ({pendingCount})
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to='/refused' className='nav-link text-light'>
+                                        Refused ({refusedCount})
+                                    </Link>
+                                </li>
+                                <li className="nav-item">
+                                    <Link to='/confirmed' className='nav-link text-light'>
+                                        Confirmed ({confirmedCount})
+                                    </Link>
+                                </li>
                             </ul>
                         </div>
                     </div>
                 </nav>
             </header>
 
-            <div className="container" style={{ marginTop: 60 }}>
+            <div className="container" style={{ marginTop: 85}}>
                 {props.children}
             </div>
 

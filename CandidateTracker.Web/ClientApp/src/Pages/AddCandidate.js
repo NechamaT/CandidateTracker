@@ -1,8 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import {Context} from '../components/Context'
+import PhoneInput from 'react-phone-number-input'
+
 
 const AddCandidate = () => {
+  const ctx = useContext(Context);
   const [candidate, setCandidate] = useState({
     firstName: "",
     lastName: "",
@@ -20,6 +24,7 @@ const AddCandidate = () => {
 
   const onSubmitClick = async () => {
     await axios.post("/api/candidatetracker/addcandidate", candidate);
+    ctx.updateCounts();
     history.push("/");
   };
 const {firstName, lastName, email, phoneNumber, notes} = candidate;
@@ -44,10 +49,11 @@ const {firstName, lastName, email, phoneNumber, notes} = candidate;
             onChange={onTextChange}
           />
           <br />
-          <input
+          <input 
+            name="phoneNumber"
             className="form-control"
             placeholder="Phone Number"
-            name="phoneNumber"
+            country="US"
             value={phoneNumber}
             onChange={onTextChange}
           />

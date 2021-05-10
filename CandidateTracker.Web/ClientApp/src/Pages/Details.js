@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
-import axios from 'axios';
-import { useParams} from "react-router-dom";
+import React, { useState, useEffect, useContext } from "react";
+import axios from "axios";
+import { useParams, useHistory } from "react-router-dom";
+import {Context} from '../components/Context';
 
 const Details = () => {
+  const ctx = useContext(Context);
   const [candidate, setCandidate] = useState({
     firstName: "",
     lastName: "",
@@ -12,6 +14,7 @@ const Details = () => {
     status: "",
   });
   const { id } = useParams();
+  const history = useHistory();
 
   useEffect(() => {
     const getCandidateById = async () => {
@@ -22,9 +25,15 @@ const Details = () => {
     getCandidateById();
   }, []);
 
-const onClick = e =>{
-setCandidate({...candidate, status: e.target.name})
-}
+  const onButtonClick = async e => {
+    const copy ={...candidate};
+    copy.status = e.target.name;
+    console.log(copy);
+    await axios.post("api/candidatetracker/updatecandidate", copy);
+    ctx.updateCounts();
+    history.push("/");
+  };
+
   const { firstName, lastName, phoneNumber, email, notes, status } = candidate;
   return (
     <div className="row">
@@ -39,10 +48,10 @@ setCandidate({...candidate, status: e.target.name})
           <h4>Notes:</h4>
           <p>{notes}</p>
           <div>
-              <div className='btn-group'>
-            <button className="btn btn-primary" name ="Confirmed" onChange={onClick}>Confirm</button>
-            <br />
-            <button className="btn btn-danger" name="Refused" onChange={onClick}>Refuse</button>
+            <div className="btn-group">
+            <button onClick={onButtonClick} name='confirmed' className="btn btn-primary">Confirm</button>
+                
+                <button onClick={onButtonClick} name='refused' style={{marginLeft:20}} className="btn btn-danger">Refuse</button>
             </div>
           </div>
         </div>

@@ -21,7 +21,7 @@ namespace CandidateTracker.Web.Controllers
         }
 
         [HttpPost]
-        [Route("addcandidate")]
+        [Route("addCandidate")]
         public void AddCandidate(Candidate candidate)
         {
             var repo = new CandidateTrackerRepository(_connectionString);
@@ -35,20 +35,47 @@ namespace CandidateTracker.Web.Controllers
             var repo = new CandidateTrackerRepository(_connectionString);
             return repo.GetCandidateById(id);
         }
+        [HttpPost]
+        [Route("updateCandidate")]
+        public void UpdateCandidate(Candidate candidate)
+        {
+            var repo = new CandidateTrackerRepository(_connectionString);
+            repo.Update(candidate);
+        }
+     
 
-        [HttpPost]
-        [Route("statusrefused")]
-        public void statusrefused(int id)
+        [HttpGet]
+        [Route("getPending")]
+        public List<Candidate> GetPending()
         {
             var repo = new CandidateTrackerRepository(_connectionString);
-            repo.StatusRefused(id);
+            return repo.GetByStatus(Status.Pending);
         }
-        [HttpPost]
-        [Route("statusconfirmed")]
-        public void statusconfirmed(int id)
+
+
+        [HttpGet]
+        [Route("getrefused")]
+        public List<Candidate> GetRefused()
         {
             var repo = new CandidateTrackerRepository(_connectionString);
-            repo.StatusConfirm(id);
+            return repo.GetByStatus(Status.Refused);
         }
+
+        [HttpGet]
+        [Route("getConfirmed")]
+        public List<Candidate> GetConfirmed()
+        {
+            var repo = new CandidateTrackerRepository(_connectionString);
+            return repo.GetByStatus(Status.Confirmed);
+        }
+
+        [HttpGet]
+        [Route("getCounts")]
+        public List<int> GetCounts()
+        {
+            var repo = new CandidateTrackerRepository(_connectionString);
+            return repo.GetCounts();
+        }
+
     }
 }

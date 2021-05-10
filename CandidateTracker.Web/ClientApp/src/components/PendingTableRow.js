@@ -2,7 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 
 const PendingTableRow = ({candidate}) =>{
-    const {id, firstName, lastName, phoneNumber, email} = candidate;
+    const {id, firstName, lastName, phoneNumber, email, notes} = candidate;
     return(
         <tr>
             <td>
